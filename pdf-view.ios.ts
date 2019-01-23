@@ -55,13 +55,13 @@ export class PDFView extends PDFViewCommon {
 
     let url: NSURL;
 
-    if (src.indexOf('://') === -1) {
-      url = NSURL.fileURLWithPath(src);
-      this.ios.loadFileURLAllowingReadAccessToURL(url, url);
-    } else {
+    if (src.startsWith('http')) {
       url = NSURL.URLWithString(src);
       const urlRequest = NSURLRequest.requestWithURL(url);
       this.ios.loadRequest(urlRequest);
+    } else {
+      url = NSURL.fileURLWithPath(src);
+      this.ios.loadFileURLAllowingReadAccessToURL(url, url);
     }
   }
 
